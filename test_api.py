@@ -45,7 +45,7 @@ class FlaskTestsApi(TestCase):
         post_result = self.client.post('/chat', data=inputs)
         self.assertEqual(201, post_result.status_code)
 
-        # get_result = self.client.get('/chat/4')
+        get_result = self.client.get('/chat/5')
 
 
     def test_invalid_post_with_missing_inputs_returns_400(self):
@@ -91,6 +91,13 @@ class FlaskTestsApi(TestCase):
         self.assertIn('Second message', result.data)
         self.assertNotIn('Expired message', result.data)
 
+    def test_messages_expire_after_get_chats_for_user(self):
+
+        expire_chats = self.client.get('/chats/whitney')
+        result = self.client.get('/chats/whitney')
+
+        self.assertNotIn('id', result.data)
+        self.assertNotIn('text', result.data)
 
 if __name__ == '__main__':
     import unittest

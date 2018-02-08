@@ -84,7 +84,6 @@ def validate_timeout(timeout_input):
     except ValueError:
         return 'not a num'
 
-
 if __name__ == '__main__':
     connect_to_db(app)
     db.create_all()
