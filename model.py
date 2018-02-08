@@ -26,15 +26,15 @@ def example_data():
 
     msg1 = Message(recipient_username='paul',
                   message='Test Message',
-                  expiration=datetime(2018, 1, 30, 7, 6, 5))
+                  expiration=datetime(2018, 1, 12, 7, 6, 5))
     msg2 = Message(recipient_username='whitney',
                   message='Hello Whitney',
-                  expiration=datetime(2018, 2, 30, 10, 6, 5))
-    msg3 = Message(recipient_username='harry',
-                  message='Hello Harry',
-                  expiration=datetime(2017, 12, 30, 7, 6, 5))
+                  expiration=datetime(2018, 2, 10, 10, 6, 5))
+    msg3 = Message(recipient_username='whitney',
+                  message='Second message',
+                  expiration=datetime(2018, 12, 5, 7, 6, 5))
 
-    db.session.add_all([message1, message2, message3])
+    db.session.add_all([msg1, msg2, msg3])
 
     db.session.commit()
 
