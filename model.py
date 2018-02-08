@@ -31,8 +31,8 @@ def example_data():
                   message='Hello Whitney',
                   expiration=datetime(2018, 2, 30, 10, 6, 5))
     msg3 = Message(recipient_username='harry',
-              message='Hello Harry',
-              expiration=datetime(2017, 12, 30, 7, 6, 5))
+                  message='Hello Harry',
+                  expiration=datetime(2017, 12, 30, 7, 6, 5))
 
     db.session.add_all([message1, message2, message3])
 

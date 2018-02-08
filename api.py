@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 app = Flask(__name__)
 api = Api(app)
 
-class Chats(Resource):
+class Chat(Resource):
 
     def post(self):
 
@@ -44,8 +44,27 @@ class Chats(Resource):
                  'text': message.message,
                  'expiration_date': expiration}
 
-api.add_resource(Chats, '/chat', '/chat/<message_id>', '/chats/<username>')
+class Chats(Resource):
 
+    def get(self, username=None):
+
+        if username is None:
+            return {}, 400
+
+        all_messages = []
+
+        messages = Message.query.filter(Message.recipient_username == username,
+                                       Message.expiration > datetime.now())
+
+        for message in messages:
+            all_messages.append({ 'id': message.message_id,
+                                  'text': message.message })
+
+        return all_messages
+
+
+api.add_resource(Chat, '/chat', '/chat/<message_id>')
+api.add_resource(Chats, '/chats/<username>')
 
 def format_expiration_datetime(datetime_obj):
 
