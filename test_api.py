@@ -29,10 +29,10 @@ class FlaskTestsApi(TestCase):
         post_result = self.client.post('/chat', data=inputs)
 
         self.assertIn('id', post_result.data)
-        self.assertIn('4', post_result.data)
+        self.assertIn('5', post_result.data)
         self.assertEqual(201, post_result.status_code)
 
-        get_result = self.client.get('/chat/4')
+        get_result = self.client.get('/chat/5')
         self.assertIn('event posted!', get_result.data)
 
     def test_post_adds_event_successfully_without_timeout_input(self):
@@ -81,7 +81,7 @@ class FlaskTestsApi(TestCase):
 
         self.assertEqual(404, result.status_code)
 
-    def test_get_with_username_returns_all_messages(self):
+    def test_get_with_username_returns_only_unexpired_messages(self):
 
         result = self.client.get('/chats/whitney')
 
@@ -89,6 +89,7 @@ class FlaskTestsApi(TestCase):
         self.assertIn('text', result.data)
         self.assertIn('Hello Whitney', result.data)
         self.assertIn('Second message', result.data)
+        self.assertNotIn('Expired message', result.data)
 
 
 if __name__ == '__main__':

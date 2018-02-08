@@ -13,9 +13,7 @@ class Chat(Resource):
 
         username = request.form.get('username')
         text = request.form.get('text')
-        print 'UNVALIDATED', request.form.get('timeout')
         timeout = validate_timeout(request.form.get('timeout'))
-        print 'CHECK', timeout
         
         if username is None or text is None or timeout == 'not a num':
             return {}, 400
