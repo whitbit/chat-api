@@ -10,6 +10,9 @@ api = Api(app)
 class Chat(Resource):
 
     def post(self):
+        """
+        Adds new message to database.
+        """
 
         username = request.form.get('username')
         text = request.form.get('text')
@@ -32,6 +35,10 @@ class Chat(Resource):
         return { 'id': message.message_id }, 201
 
     def get(self, message_id=None):
+        """
+        Gets JSON of message with message id.
+
+        """
 
         message = Message.query.get(message_id)
 
@@ -47,6 +54,11 @@ class Chat(Resource):
 class Chats(Resource):
 
     def get(self, username=None):
+        """
+        Gets all unexpired messages of user.
+        Expires queried messages to current request datetime.
+
+        """
 
         if username is None:
             return {}, 400
@@ -69,12 +81,21 @@ class Chats(Resource):
 api.add_resource(Chat, '/chat', '/chat/<message_id>')
 api.add_resource(Chats, '/chats/<username>')
 
+
 def format_expiration_datetime(datetime_obj):
+    """
+    Reformats datetime object to desired datetime format for Json response.
+    """
 
     return datetime_obj.strftime('%Y-%m-%d %H:%M:%S')
 
-def validate_timeout(timeout_input):
 
+def validate_timeout(timeout_input):
+    """
+    Validates timeout input.
+    No timeout input results in timeout default value of 60 seconds.
+    Inputs that are not numbers are invalid.
+    """
     if timeout_input is None:
         timeout = 60
         return timeout

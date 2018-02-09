@@ -2,7 +2,7 @@ from api import app, api, Chat, Chats
 from unittest import TestCase
 from model import connect_to_db, db, Message, example_data
 
-class FlaskTestsApi(TestCase):
+class TestApiEndpoints(TestCase):
 
     def setUp(self):
 
@@ -75,6 +75,12 @@ class FlaskTestsApi(TestCase):
         self.assertIn('username', result.data)
         self.assertIn('Test Message', result.data)
 
+    def test_get_returns_correct_expiration_format(self):
+
+        result = self.client.get('/chat/1')
+
+        self.assertIn('2018-01-12 07:06:05', result.data)
+
     def test_invalid_get_without_existing_username_returns_404(self):
 
         result = self.client.get('/chat/6')
@@ -98,6 +104,7 @@ class FlaskTestsApi(TestCase):
 
         self.assertNotIn('id', result.data)
         self.assertNotIn('text', result.data)
+
 
 if __name__ == '__main__':
     import unittest

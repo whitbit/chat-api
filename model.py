@@ -34,8 +34,8 @@ def example_data():
                   message='Second message',
                   expiration=datetime(2018, 12, 5, 7, 6, 5))
     msg4 = Message(recipient_username='whitney',
-              message='Expired message',
-              expiration=datetime(2017, 12, 5, 7, 6, 5))
+                  message='Expired message',
+                  expiration=datetime(2017, 12, 5, 7, 6, 5))
 
     db.session.add_all([msg1, msg2, msg3, msg4])
 
